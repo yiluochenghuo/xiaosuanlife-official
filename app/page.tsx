@@ -1,56 +1,42 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Calculator, ChevronRight, CircleDollarSign, Download, HeartPulse, Menu, MoveRight, Ruler, Sparkles, Users, X } from "lucide-react";
+import { ArrowRight, Calculator, CalendarDays, ChevronRight, Download, HeartPulse, History, Menu, Ruler, ShieldCheck, Sparkles, Star, UserRound, Users, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const features = [
-  { icon: Calculator, no: "01", title: "基础计算", text: "把日常计算装进口袋，打开就算，没有多余步骤。", tone: "blue" },
-  { icon: Ruler, no: "02", title: "单位换算", text: "长度、重量、面积与温度，跨单位切换快而准确。", tone: "cyan" },
-  { icon: HeartPulse, no: "03", title: "健康计算", text: "BMI、基础代谢与健康指标，读懂身体的日常数据。", tone: "rose" },
-  { icon: CircleDollarSign, no: "04", title: "金融计算", text: "贷款、利息与收益测算，重要决定更有把握。", tone: "amber" },
-  { icon: Sparkles, no: "05", title: "生活计算", text: "日期、年龄、时间和消费，琐碎数字一次理清。", tone: "violet" },
-  { icon: Users, no: "06", title: "亲戚关系换算", text: "再复杂的称谓也不用猜，家庭聚会从容开口。", tone: "green" },
+const APK_URL = "/download/XiaoSuanLife-v1.2.3-debug.apk";
+const tools = [
+  { icon: Calculator, title: "标准计算器", sub: "日常计算", className: "orange" },
+  { icon: Users, title: "亲戚关系换算", sub: "亲戚称呼", className: "yellow" },
+  { icon: HeartPulse, title: "BMI 健康计算", sub: "健康指数", className: "coral" },
+  { icon: Ruler, title: "单位转换", sub: "多种单位", className: "cream" },
 ];
 
-const scenes = [
-  { emoji: "🥣", tag: "健康", title: "早餐热量", value: "486 kcal", note: "轻松掌握每日摄入" },
-  { emoji: "🗺️", tag: "旅行", title: "距离换算", value: "12.4 mi", note: "陌生单位也能秒懂" },
-  { emoji: "🏠", tag: "金融", title: "房贷月供", value: "¥ 4,862", note: "大事提前算清楚" },
-  { emoji: "👪", tag: "家庭", title: "关系称谓", value: "表舅", note: "见面不再叫错人" },
-];
-
-function Brand({ light = false }: { light?: boolean }) {
-  return <Link href="/" className={`brand ${light ? "brand-light" : ""}`} aria-label="小算生活首页"><span className="brand-mark"><span>+</span><span>−</span></span><span><b>小算生活</b><small>XiaoSuanLife</small></span></Link>;
+function Logo({ inverse = false }: { inverse?: boolean }) {
+  return <Link className={`logo ${inverse ? "inverse" : ""}`} href="/" aria-label="小算生活首页"><span className="logo-mascot"><i>●</i><i>●</i><b>⌣</b><em>+</em><em>−</em></span><span><strong>小算生活</strong><small>XiaoSuanLife</small></span></Link>;
 }
 
 function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 24); onScroll(); window.addEventListener("scroll", onScroll); return () => window.removeEventListener("scroll", onScroll); }, []);
-  const links = [["首页", "#home"], ["功能", "#features"], ["特色", "#advantages"], ["场景", "#scenes"], ["关于", "#about"]];
-  return <header className={`navbar ${scrolled ? "is-scrolled" : ""}`}><div className="nav-inner"><Brand /><nav className={open ? "open" : ""}>{links.map(([n, h]) => <a key={h} href={h} onClick={() => setOpen(false)}>{n}</a>)}<Link href="/download" className="nav-download">立即下载 <Download size={15}/></Link></nav><button className="menu" aria-label={open ? "关闭菜单" : "打开菜单"} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button></div></header>;
+  const [open,setOpen]=useState(false); const [scrolled,setScrolled]=useState(false);
+  useEffect(()=>{const fn=()=>setScrolled(window.scrollY>18);fn();window.addEventListener("scroll",fn);return()=>window.removeEventListener("scroll",fn)},[]);
+  return <header className={`navbar ${scrolled?"is-scrolled":""}`}><div className="nav-inner"><Logo/><nav className={open?"open":""}><a href="#features" onClick={()=>setOpen(false)}>功能</a><a href="#screens" onClick={()=>setOpen(false)}>界面</a><a href="#story" onClick={()=>setOpen(false)}>特色</a><a href="#about" onClick={()=>setOpen(false)}>关于</a><a className="nav-download" href={APK_URL} download><Download/> 下载 v1.2.3</a></nav><button className="menu" onClick={()=>setOpen(!open)} aria-label={open?"关闭菜单":"打开菜单"}>{open?<X/>:<Menu/>}</button></div></header>;
 }
 
-function Phone({ compact = false }: { compact?: boolean }) {
-  return <div className={`phone ${compact ? "phone-compact" : ""}`}><div className="phone-bar"><span>9:41</span><span>● ◒</span></div><div className="phone-head"><div><small>下午好</small><b>今天想算点什么？</b></div><span className="avatar">算</span></div><div className="answer-card"><span>快速计算</span><strong>1,286<em>.50</em></strong><div>24 × 53.604</div></div><div className="phone-section"><span>常用工具</span><small>查看全部</small></div><div className="tool-grid">{features.slice(0, 4).map((f) => <div key={f.title} className={`mini-tool ${f.tone}`}><f.icon/><span>{f.title}</span></div>)}</div><div className="tip"><Sparkles/><span><b>每日小算</b><small>今天已为你节省 8 分钟</small></span></div><div className="phone-dock"><i/><i/><i/></div></div>;
+function AppPhone() {
+  return <div className="app-phone"><div className="phone-status"><span>9:30</span><span>◒ ▰</span></div><div className="phone-hero"><div><h3>小算生活</h3><p>XiaoSuanLife</p></div><div className="phone-mascot"><span>●　●</span><b>⌣</b><div>●　●　●</div><div>●　●　♥</div></div><Sparkles className="spark s1"/><Sparkles className="spark s2"/></div><div className="phone-search"><span>⌕　输入需要计算的问题</span><b>计算</b></div><div className="phone-tools">{tools.map(t=><div className="phone-tool" key={t.title}><span className={t.className}><t.icon/></span><div><b>{t.title}</b><small>{t.sub}</small></div></div>)}</div><div className="phone-banner"><div><b>小算生活，暖暖陪伴</b><span>让生活计算更简单 ✦</span></div><div className="mini-mascot">⌣<small>● ●</small></div></div><div className="phone-tabs"><span className="active"><span>◆</span>首页</span><span><History/>历史</span><span><Star/>收藏</span><span><UserRound/>我的</span></div></div>;
 }
 
-export default function Home() {
-  return <main><Navbar />
-    <section className="hero" id="home"><div className="hero-grid"><motion.div className="hero-copy" initial={{opacity:0,y:28}} animate={{opacity:1,y:0}} transition={{duration:.7}}><div className="eyebrow"><span/> 为日常而生的计算工具</div><h1>生活中的数字，<br/><em>小算一下就好。</em></h1><p>从日常计算到复杂换算，小算生活帮你快速理清每一个数字，让选择更简单，让决定更从容。</p><div className="hero-actions"><Link className="primary-button" href="/download"><Download size={18}/>立即下载 App</Link><a className="text-button" href="#features">探索全部功能 <ArrowRight size={17}/></a></div><div className="trust-row"><span><b>6</b> 大工具分类</span><span><b>20+</b> 实用计算</span><span><b>0</b> 学习成本</span></div></motion.div><motion.div className="hero-visual" initial={{opacity:0,scale:.93}} animate={{opacity:1,scale:1}} transition={{duration:.8,delay:.1}}><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="float-pill pill-a"><Ruler/><span>100 cm<b>= 1 m</b></span></div><div className="float-pill pill-b"><HeartPulse/><span>BMI<b>21.8 正常</b></span></div><Phone/><div className="glow"/></motion.div></div><div className="scroll-note">向下探索 <span>↓</span></div></section>
+export default function Home(){return <main><Navbar/>
+  <section className="hero" id="home"><div className="warm-blob blob-one"/><div className="warm-blob blob-two"/><div className="hero-inner"><motion.div className="hero-copy" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.7}}><span className="eyebrow"><Sparkles/> 小算生活 Android v1.2.3</span><h1>暖暖地，<br/>帮你算清生活<span>每一笔。</span></h1><p>从标准计算到亲戚称呼，从健康指标到单位转换。一个软萌、顺手又可靠的生活计算小助手。</p><div className="hero-actions"><a className="primary-button" href={APK_URL} download><Download/>立即下载 APK <small>17.27 MB</small></a><a className="text-button" href="#screens">看看 App 界面 <ArrowRight/></a></div><div className="download-proof"><ShieldCheck/><span><b>已接入真实安装包</b>支持 Android 8.0 及以上系统</span></div></motion.div><motion.div className="hero-visual" initial={{opacity:0,scale:.94,y:18}} animate={{opacity:1,scale:1,y:0}} transition={{duration:.8,delay:.1}}><div className="hero-ring ring-one"/><div className="hero-ring ring-two"/><AppPhone/><div className="float-note note-one"><HeartPulse/><span><b>BMI 22.2</b>健康范围</span></div><div className="float-note note-two"><Ruler/><span><b>10 米</b>= 0.01 千米</span></div></motion.div></div></section>
 
-    <section className="section" id="features"><div className="section-heading"><div><span className="kicker">ALL IN ONE</span><h2>一次 App，解决生活中的<br/>各种计算需求</h2></div><p>不追求堆砌功能，只把每一种常用计算做得<br/>直观、顺手、值得信赖。</p></div><div className="feature-grid">{features.map((f, i) => <motion.article className="feature-card" key={f.title} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-60px"}} transition={{delay:i*.05}}><div className={`icon-box ${f.tone}`}><f.icon/></div><span className="card-no">{f.no}</span><h3>{f.title}</h3><p>{f.text}</p><span className="card-link">了解更多 <ChevronRight/></span></motion.article>)}</div></section>
+  <section className="features section" id="features"><div className="section-intro center"><span className="section-label">常用工具</span><h2>生活里常用的计算，<br/>打开就能找到</h2><p>清晰的分类、温暖的界面，每一步都简单好懂。</p></div><div className="feature-grid">{tools.map((t,i)=><motion.article className="feature-card" key={t.title} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}><span className={`feature-icon ${t.className}`}><t.icon/></span><small>0{i+1}</small><h3>{t.title}</h3><p>{i===0?"大字号结果与舒适按键，随手算一笔。":i===1?"复杂关系一步步梳理，称呼不再难猜。":i===2?"输入身高体重，快速了解 BMI 健康区间。":"长度、重量、面积、体积、温度轻松互换。"}</p><ChevronRight/></motion.article>)}</div></section>
 
-    <section className="advantages" id="advantages"><div className="section narrow"><span className="kicker light">WHY XIAOSUAN</span><h2>少一点复杂，<br/>多一点确定。</h2><div className="adv-grid">{[["01","简单易用","清晰的信息层级与自然操作路径，第一次打开也知道怎么用。"],["02","覆盖全面","从健康到金融，从工作到家庭，一站覆盖真实生活场景。"],["03","快速准确","精心校验计算逻辑，输入即得结果，每一次都清楚可靠。"]].map((a) => <div className="adv" key={a[0]}><strong>{a[0]}</strong><div><h3>{a[1]}</h3><p>{a[2]}</p></div></div>)}</div></div></section>
+  <section className="screens" id="screens"><div className="screens-inner"><div className="screen-copy"><span className="section-label">真实 App 界面</span><h2>网站与 App，<br/>从里到外都是同一种温度。</h2><p>官网现在完整继承了小算生活的奶油白、暖橙渐变、圆润卡片与软萌陪伴感，让用户第一眼就能认出你的产品。</p><div className="screen-points"><span><b>01</b>暖橙奶油配色</span><span><b>02</b>大圆角轻卡片</span><span><b>03</b>真实功能展示</span></div><a className="outline-button" href={APK_URL} download>下载体验完整功能 <ArrowRight/></a></div><div className="showcase-image"><img src="/app-showcase.png" alt="小算生活 v1.2.3 全部 App 界面展示"/><div className="image-caption"><Sparkles/><span><b>小算生活 v1.2.3</b>你提供的真实产品界面</span></div></div></div></section>
 
-    <section className="product-showcase"><div className="showcase-copy"><span className="kicker">THE APP</span><h2>让计算，成为一种<br/>轻松的生活习惯。</h2><p>常用功能触手可及，计算结果清晰呈现。没有广告干扰，没有复杂学习，只有恰到好处的帮助。</p><ul><li><span>✓</span>轻量安装，打开即用</li><li><span>✓</span>关键信息一眼看懂</li><li><span>✓</span>为 Android 深度优化</li></ul><Link href="/download" className="text-button blue">查看 Android 版本 <MoveRight/></Link></div><div className="phone-stage"><div className="phone-back"><div className="fake-list"><b>全部工具</b>{features.slice(0,5).map(f=><span key={f.title}><f.icon/>{f.title}<ChevronRight/></span>)}</div></div><Phone compact/></div></section>
+  <section className="story section" id="story"><div className="story-card"><div className="story-mascot"><div className="mascot-screen"><i/> <i/><b>⌣</b></div><div className="mascot-keys"><i/><i/><i/><i/><i/><i/><i/><i/><i/></div></div><div className="story-copy"><span className="section-label">为什么是小算</span><h2>少一点冷冰冰，<br/>多一点暖暖陪伴。</h2><p>计算工具也可以有温度。小算把复杂的数字藏在简单操作之后，让每一次计算都更轻松、更安心。</p><div className="story-stats"><span><b>4+</b>核心场景</span><span><b>17.27</b>MB 安装包</span><span><b>8.0+</b>Android</span></div></div></div></section>
 
-    <section className="section scenes" id="scenes"><div className="section-heading"><div><span className="kicker">EVERYDAY MOMENTS</span><h2>每个生活瞬间，<br/>都有小算在身边</h2></div><p>那些值得认真对待的小问题，<br/>交给小算，答案马上就来。</p></div><div className="scene-grid">{scenes.map((s,i)=><article className={`scene-card scene-${i+1}`} key={s.title}><div className="scene-top"><span className="scene-emoji">{s.emoji}</span><span className="scene-tag">{s.tag}</span></div><div><small>{s.title}</small><strong>{s.value}</strong><p>{s.note}</p></div></article>)}</div></section>
+  <section className="download-band" id="download"><div><span className="section-label light">现在就下载</span><h2>让小算陪你，<br/>算清生活每一笔。</h2><p>小算生活 XiaoSuanLife v1.2.3 · Android 安装包</p></div><div className="band-actions"><a className="white-button" href={APK_URL} download><Download/>直接下载 APK <ArrowRight/></a><Link href="/download">查看版本详情与二维码</Link></div></section>
 
-    <section className="download-band" id="download"><div className="download-inner"><div><span className="kicker light">DOWNLOAD</span><h2>现在，开始你的小算生活。</h2><p>Android 8.0 及以上系统 · 轻量、纯粹、免费使用</p></div><Link className="white-button" href="/download"><Download/>前往下载中心 <ArrowRight/></Link></div></section>
-
-    <footer id="about"><div className="footer-top"><Brand light/><p>让复杂计算变简单，<br/>让生活决策更轻松。</p><div className="footer-links"><div><b>产品</b><a href="#features">核心功能</a><a href="#advantages">产品特色</a><Link href="/download">下载 App</Link></div><div><b>了解</b><a href="#about">关于我们</a><a href="mailto:hello@xiaosuan.life">联系我们</a><span>隐私政策</span></div></div></div><div className="footer-bottom"><span>© 2026 XiaoSuanLife. 保留所有权利。</span><span>认真计算 · 好好生活</span></div></footer>
-  </main>;
-}
+  <footer id="about"><div className="footer-top"><Logo inverse/><p>暖暖地，帮你算清生活每一笔。</p><div><a href="#features">核心功能</a><a href="#screens">App 界面</a><a href={APK_URL} download>下载 v1.2.3</a><Link href="/download">下载中心</Link></div></div><div className="footer-bottom"><span>© 2026 XiaoSuanLife</span><span>认真计算 · 暖暖生活</span></div></footer>
+</main>}
