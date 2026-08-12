@@ -1,5 +1,7 @@
 # 小算生活 XiaoSuanLife 官网
 
+> 🌐 **官方网站：** [https://xiaosuanlife-official.qq3809326694.chatgpt.site/](https://xiaosuanlife-official.qq3809326694.chatgpt.site/)
+
 小算生活官方产品网站，包含品牌首页、Android 下载中心、二维码下载、静态版本配置与版本查询 API。
 
 ## 本地开发
