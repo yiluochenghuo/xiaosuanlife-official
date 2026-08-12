@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Calculator, CalendarDays, ChevronLeft, ChevronRight, Download, HeartPulse, History, Landmark, Menu, Ruler, Star, Thermometer, UserRound, Users, WalletCards, X } from "lucide-react";
+import { ArrowRight, Calculator, CalendarDays, ChevronLeft, ChevronRight, Download, HeartPulse, History, Landmark, Menu, Star, Thermometer, UserRound, Users, WalletCards, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -14,13 +14,13 @@ const tools=[
  {icon:HeartPulse,title:"BMI 计算",desc:"体重指数与健康提示",shot:"bmi"},
  {icon:HeartPulse,title:"热量计算",desc:"基础代谢与每日消耗",shot:"calories"},
  {icon:WalletCards,title:"汇率转换",desc:"常用国际货币换算",shot:"exchange"},
- {icon:Ruler,title:"单位转换",desc:"长度、重量与温度",shot:"home"},
+ {icon:CalendarDays,title:"日期计算",desc:"日期间隔快速计算",shot:"date"},
  {icon:Thermometer,title:"温度转换",desc:"摄氏度与华氏度独立换算",shot:"temperature"},
  {icon:CalendarDays,title:"年龄计算",desc:"出生年月日、周岁与生肖",shot:"age"},
  {icon:Users,title:"亲戚关系换算",desc:"中国亲属关系图谱推导",shot:"relation"},
 ];
 const gallery=[
- ["home","工具首页"],["calculator","标准计算器"],["mortgage","房贷计算"],["tax","工资个税"],["bmi","BMI 健康"],["relation","亲戚换算"],["history","历史记录"],["favorites","我的收藏"],["profile","个人中心"],["exchange","汇率转换"],["temperature","温度转换"],["calories","热量计算"],["age","年龄计算"],["interest","利息计算"]
+ ["home","工具首页"],["calculator","标准计算器"],["mortgage","房贷计算"],["tax","工资个税"],["bmi","BMI 健康"],["relation","亲戚换算"],["history","历史记录"],["favorites","我的收藏"],["profile","个人中心"],["exchange","汇率转换"],["temperature","温度转换"],["date","日期计算"],["calories","热量计算"],["age","年龄计算"],["interest","利息计算"]
 ];
 
 function Logo({dark=false}:{dark?:boolean}){return <Link href="/" className={`logo ${dark?"dark":""}`}><span className="logo-box">±</span><span><b>小算生活</b><small>XiaoSuanLife</small></span></Link>}
@@ -33,7 +33,7 @@ export default function Home(){const[active,setActive]=useState(0);const prev=()
 
  <section className="tools section" id="tools"><div className="section-head"><div><span className="label">TOOLBOX</span><h2>一个 App，覆盖<br/>真实生活的每种计算</h2></div><p>工具不只多，更重要的是每一个都能真正解决问题。<br/>点击任意功能卡片，即可查看对应的真实界面。</p></div><div className="tool-grid">{tools.map((t,i)=><motion.button type="button" key={t.title} className="tool-card" onClick={()=>openTool(t.shot)} aria-label={`查看${t.title}真实界面`} aria-controls="screens" initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:(i%5)*.04}}><span className="tool-icon"><t.icon/></span><small>{String(i+1).padStart(2,"0")}</small><h3>{t.title}</h3><p>{t.desc}</p><span className="tool-arrow" aria-hidden="true"><ArrowRight/></span></motion.button>)}</div></section>
 
- <section className="screens-section" id="screens"><div className="screens-wrap"><div className="screens-copy"><span className="label">REAL PRODUCT</span><h2>14 张真实界面，<br/>这才是小算生活。</h2><p>每一张展示都来自你提供的 v1.2.3 App：统一的暖米色背景、珊瑚橙操作色、深棕文字，以及清晰的大圆角结果卡片。</p><div className="screen-count"><b>{String(active+1).padStart(2,"0")}</b><span>/ {gallery.length}</span><em>{gallery[active][1]}</em></div><div className="slider-buttons"><button onClick={prev} aria-label="上一张"><ChevronLeft/></button><button onClick={next} aria-label="下一张"><ChevronRight/></button></div></div><div className="screen-slider"><div className="screen-phone main"><img src={`/screens/${gallery[active][0]}.jpg`} alt={`小算生活 ${gallery[active][1]}界面`}/></div><button className="peek prev" onClick={prev} aria-label="上一张预览"><img src={`/screens/${gallery[(active-1+gallery.length)%gallery.length][0]}.jpg`} alt=""/></button><button className="peek next" onClick={next} aria-label="下一张预览"><img src={`/screens/${gallery[(active+1)%gallery.length][0]}.jpg`} alt=""/></button></div></div><div className="screen-dots">{gallery.map((g,i)=><button key={g[0]} className={i===active?"active":""} onClick={()=>setActive(i)} aria-label={`查看${g[1]}`}/>)}</div></section>
+ <section className="screens-section" id="screens"><div className="screens-wrap"><div className="screens-copy"><span className="label">REAL PRODUCT</span><h2>15 张真实界面，<br/>这才是小算生活。</h2><p>每一张展示都来自你提供的 v1.2.3 App：统一的暖米色背景、珊瑚橙操作色、深棕文字，以及清晰的大圆角结果卡片。</p><div className="screen-count"><b>{String(active+1).padStart(2,"0")}</b><span>/ {gallery.length}</span><em>{gallery[active][1]}</em></div><div className="slider-buttons"><button onClick={prev} aria-label="上一张"><ChevronLeft/></button><button onClick={next} aria-label="下一张"><ChevronRight/></button></div></div><div className="screen-slider"><div className="screen-phone main"><img src={`/screens/${gallery[active][0]}.jpg`} alt={`小算生活 ${gallery[active][1]}界面`}/></div><button className="peek prev" onClick={prev} aria-label="上一张预览"><img src={`/screens/${gallery[(active-1+gallery.length)%gallery.length][0]}.jpg`} alt=""/></button><button className="peek next" onClick={next} aria-label="下一张预览"><img src={`/screens/${gallery[(active+1)%gallery.length][0]}.jpg`} alt=""/></button></div></div><div className="screen-dots">{gallery.map((g,i)=><button key={g[0]} className={i===active?"active":""} onClick={()=>setActive(i)} aria-label={`查看${g[1]}`}/>)}</div></section>
 
  <section className="system section" id="system"><div className="section-head"><div><span className="label">MORE THAN CALCULATE</span><h2>不止算出答案，<br/>也替你留住重要结果</h2></div></div><div className="system-grid"><article className="system-card orange"><History/><div><span>01</span><h3>历史记录</h3><p>自动保留每一次计算，房贷、BMI、热量与换算结果随时回看。</p></div><img src="/screens/history.jpg" alt="历史记录界面"/></article><article className="system-card yellow"><Star/><div><span>02</span><h3>收藏工具</h3><p>常用工具一键收藏，把自己的计算入口放在最顺手的位置。</p></div><img src="/screens/favorites.jpg" alt="收藏界面"/></article><article className="system-card cream"><UserRound/><div><span>03</span><h3>隐私与个性</h3><p>数据只存本机，支持主题与提醒设置，使用记录由你掌控。</p></div><img src="/screens/profile.jpg" alt="个人中心界面"/></article></div></section>
 
