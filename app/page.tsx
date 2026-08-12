@@ -23,7 +23,7 @@ const gallery=[
  ["home","工具首页"],["calculator","标准计算器"],["mortgage","房贷计算"],["tax","工资个税"],["bmi","BMI 健康"],["relation","亲戚换算"],["history","历史记录"],["favorites","我的收藏"],["profile","个人中心"],["exchange","汇率转换"],["temperature","温度转换"],["date","日期计算"],["calories","热量计算"],["age","年龄计算"],["interest","利息计算"]
 ];
 
-function Logo({dark=false}:{dark?:boolean}){return <Link href="/" className={`logo ${dark?"dark":""}`}><span className="logo-box">±</span><span><b>小算生活</b><small>XiaoSuanLife</small></span></Link>}
+function Logo({dark=false}:{dark?:boolean}){return <Link href="/" className={`logo ${dark?"dark":""}`}><img className="logo-box" src="/xiaosuan-app-icon.png" alt="小算生活 App 图标"/><span><b>小算生活</b><small>XiaoSuanLife</small></span></Link>}
 function Nav(){const[open,setOpen]=useState(false),[scroll,setScroll]=useState(false);useEffect(()=>{const f=()=>setScroll(window.scrollY>20);f();addEventListener("scroll",f);return()=>removeEventListener("scroll",f)},[]);return <header className={scroll?"nav scrolled":"nav"}><div className="nav-inner"><Logo/><nav className={open?"open":""}><a href="#tools" onClick={()=>setOpen(false)}>全部工具</a><a href="#screens" onClick={()=>setOpen(false)}>真实界面</a><a href="#system" onClick={()=>setOpen(false)}>产品能力</a><a href="#about" onClick={()=>setOpen(false)}>关于</a><a className="nav-cta" href={APK} download><Download/>下载 v1.2.3</a></nav><button className="menu" onClick={()=>setOpen(!open)} aria-label="菜单">{open?<X/>:<Menu/>}</button></div></header>}
 
 function Phone(){return <div className="phone-shell"><div className="phone-screen"><img src="/screens/home.jpg" alt="小算生活工具首页"/></div></div>}
