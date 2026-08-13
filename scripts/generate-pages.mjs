@@ -1,3 +1,4 @@
+
 import { cp, mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -20,11 +21,18 @@ const assets = {
 };
 
 async function render(pathname, output) {
-  const response = await worker.fetch(
+  let response = await worker.fetch(
     new Request(`https://yiluochenghuo.github.io${pathname}`, { headers: { accept: "text/html" } }),
     { ASSETS: assets },
     { waitUntil() {}, passThroughOnException() {} },
   );
+  if (response.status >= 300 && response.status < 400 && response.headers.get("location")) {
+    response = await worker.fetch(
+      new Request(new URL(response.headers.get("location"), `https://yiluochenghuo.github.io${pathname}`), { headers: { accept: "text/html" } }),
+      { ASSETS: assets },
+      { waitUntil() {}, passThroughOnException() {} },
+    );
+  }
   if (!response.ok) throw new Error(`Render failed for ${pathname}: ${response.status}`);
   const target = new URL(output, clientDir);
   await mkdir(new URL("./", target), { recursive: true });
@@ -33,6 +41,7 @@ async function render(pathname, output) {
 
 await render("/xiaosuanlife-official/", "index.html");
 await render("/xiaosuanlife-official/download", "download/index.html");
+await render("/xiaosuanlife-official/evaluation", "evaluation/index.html");
 await cp(
   new URL("dist/client/xiaosuanlife-official/_next/", root),
   new URL("dist/client/_next/", root),
