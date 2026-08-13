@@ -54,7 +54,7 @@ function Navigation({tab,setTab}:{tab:Tab;setTab:(t:Tab)=>void}){const nav:[Tab,
 function Title({eyebrow,title,text,action}:{eyebrow:string;title:string;text:string;action?:React.ReactNode}){return <header className="title"><div><small>{eyebrow}</small><h1>{title}</h1><p>{text}</p></div>{action}</header>}
 
 function Home({query,setQuery,history,open}:{query:string;setQuery:(v:string)=>void;history:RecordItem[];open:(t:Tool)=>void}){const hot=query?tools.filter(t=>(t.name+t.desc).includes(query)):[tools[10],...tools.slice(0,7)];return <div className="page home">
-  <header className="hero"><div><small>XIAOSUANLIFE · 生活计算工具箱</small><h1>小算一下，<br/>生活更有数。</h1><p>从房贷预算到健康管理，把常用计算收进一个清爽、好用的工具箱。</p></div><div className="orbit"><b>⌗</b><i>¥</i><i>%</i><i>↔</i></div></header>
+  <header className="hero"><div><small>XIAOSUANLIFE · 生活计算工具箱</small><h1>暖暖地，<br/>帮你算清生活每一笔。</h1><p>从基础计算、房贷个税，到健康管理与亲戚称呼。暖橙奶油风格，和 v1.2.4 App 保持一致。</p></div><div className="orbit"><b><img src="/xiaosuan-app-icon.png" alt="小算生活"/></b><i>¥</i><i>%</i><i>↔</i></div></header>
   <label className="search">⌕<input value={query} onChange={e=>setQuery(e.target.value)} placeholder="搜索计算工具，例如：房贷、BMI、汇率"/></label>
   <Section top="QUICK START" title="快捷入口"><div className="quick"><Quick icon="亲" title="亲戚称呼" text="关系再绕也不怕叫错" onClick={()=>open(tools.find(t=>t.id==="relationship")!)}/><Quick icon="⌗" title="快速计算" text="立即开始四则运算" onClick={()=>open(tools.find(t=>t.id==="calculator")!)}/><Quick icon="↔" title="单位转换" text="长度、重量与温度" onClick={()=>open(tools.find(t=>t.id==="unit")!)}/></div></Section>
   <Section top="POPULAR TOOLS" title={query?"搜索结果":"热门工具"}><div className="grid">{hot.map(t=><ToolCard key={t.id} tool={t} open={()=>open(t)}/>)}</div></Section>
