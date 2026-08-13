@@ -1,6 +1,6 @@
 # 小算生活 XiaoSuanLife 官网
 
-> 🌐 **官方网站：** [https://xiaosuanlife-official.qq3809326694.chatgpt.site/](https://xiaosuanlife-official.qq3809326694.chatgpt.site/)
+> 🌐 **临时官方网站（直接打开官网）：** [https://yiluochenghuo.github.io/xiaosuanlife-official/](https://yiluochenghuo.github.io/xiaosuanlife-official/)
 
 小算生活官方产品网站，包含品牌首页、Android 下载中心、二维码下载、静态版本配置与版本查询 API。
 
@@ -26,4 +26,4 @@ npm run build
 
 ## 部署
 
-项目可以部署到 Cloudflare Sites，也兼容支持 React/Vite 输出的托管平台。Node.js 建议使用 22.13 或更高版本。
+项目通过 GitHub Pages 提供临时官网，同时保留 Cloudflare Sites 部署。Node.js 建议使用 22.13 或更高版本。
