@@ -39,3 +39,25 @@ yarn-error.log*
 /.wrangler/
 /outputs/
 /work/
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
+
+# Local build and release artifacts
+/.gradle-build/
+/.release-*/
+/.site-package*/
+/edgeone-upload/
+/offline-site/
+/.pages-server*.log
+/*.tar.gz
+/*.zip
+/*-debug.jpg
+/*-after.png
+/*-crop.png
+/*-final.png
+/pixel-test.jpg
+/android-v1.2.4/
+  

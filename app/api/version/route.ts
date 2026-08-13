@@ -1,2 +1,2 @@
 import { NextResponse } from "next/server";
-export async function GET(){return NextResponse.json({version:"1.2.3",apkUrl:"/download/XiaoSuanLife-v1.2.3-debug.apk",size:"17.27 MB",update:"2026-08-12",sha256:"1019CB18D2A07F4EA185ECB93FAD2DC61E431D69FE5588DEA7B42D2ED3B2F9A4",forceUpdate:false,available:true,description:["全新暖橙奶油视觉风格","支持标准计算与亲戚关系换算","支持 BMI 健康计算与多种单位转换"]})}
+export async function GET(){return NextResponse.json({version:"1.2.4",apkUrl:"/download/XiaoSuanLife-v1.2.4-debug.apk",size:"17.45 MB",update:"2026-08-13",sha256:"947280F1BD0E9376E497496526EDD8234A62423F27D88229C103297320EAD28C",forceUpdate:false,available:true,description:["修复标准计算器等号后显示公式而非数值的问题","首页移除版本文字，界面更简洁","关于页面版本号自动与安装包同步"]})}
